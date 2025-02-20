@@ -41,3 +41,4 @@ const toggleMinimize = () => {
         </div>
     </div>
 </template>
+

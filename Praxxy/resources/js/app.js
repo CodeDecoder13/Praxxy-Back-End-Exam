@@ -21,19 +21,7 @@ createInertiaApp({
         app.use(plugin)
            .use(ZiggyVue);
         
-        // Initialize Preline
-        app.mixin({
-            mounted() {
-                import('preline/dist/preline').then(module => {
-                    module.default.init();
-                });
-            },
-            updated() {
-                import('preline/dist/preline').then(module => {
-                    module.default.init();
-                });
-            }
-        });
+        
 
         return app.mount(el);
     },

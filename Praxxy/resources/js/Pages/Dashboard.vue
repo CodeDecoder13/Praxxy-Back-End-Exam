@@ -2,6 +2,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { ShoppingBag, Users, UserPlus, Eye, BarChart2, InfoIcon } from 'lucide-vue-next';
+import ChartComponent from '@/Components/ChartComponent.vue';
 </script>
 
 
@@ -87,6 +88,10 @@ import { ShoppingBag, Users, UserPlus, Eye, BarChart2, InfoIcon } from 'lucide-v
                             </button>
                         </div>
                     </div>
+                </div>
+                <!-- Chart Component -->
+                <div class="mt-8">
+                    <ChartComponent />
                 </div>
             </div>
         </div>

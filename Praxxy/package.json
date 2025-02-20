@@ -19,7 +19,9 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
+        "@tinymce/tinymce-vue": "^6.1.0",
         "@vitejs/plugin-vue": "^5.2.1",
+        "@vueform/vueform": "^1.12.3",
         "apexcharts": "^4.5.0",
         "chart.js": "^4.4.8",
         "lucide-vue-next": "^0.475.0",

@@ -1,33 +1,28 @@
 <script setup>
-import { ref } from 'vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import Sidebar from '@/Components/Sidebar.vue';
-
-const isOpen = ref(true);
-const isMinimized = ref(false);
-
-const toggleSidebar = () => {
-    isOpen.value = !isOpen.value;
-};
+import { ShoppingBag, Users, UserPlus, Eye, BarChart2, InfoIcon } from 'lucide-vue-next';
+import ChartComponent from '@/Components/ChartComponent.vue';
 </script>
 
 <template>
     <Head title="Video Management" />
 
     <AuthenticatedLayout>
-        <div class="flex">
-            <Sidebar :isOpen="isOpen" :isMinimized="isMinimized" @toggle="toggleSidebar" />
-            
-            <div class="flex-1 p-8">
-                <h1 class="text-2xl font-bold mb-6">Video Management</h1>
-                
-                <div class="bg-white rounded-lg shadow p-6">
-                    <p class="text-red-600">
-                        Debug: There is no content showing in the video page.
-                        Please implement the video management functionality.
-                    </p>
+        <template #header>
+            <h2 class="text-xl font-semibold leading-tight text-black">
+                Video Management
+            </h2>
+        </template>
+
+        <div class="py-8">
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div class="mb-8 flex items-center">
+                    <BarChart2 class="w-8 h-8 mr-3 text-gray-700" />
+                    <h3 class="text-2xl font-bold text-gray-800">Product Overview</h3>
                 </div>
+
+                
             </div>
         </div>
     </AuthenticatedLayout>

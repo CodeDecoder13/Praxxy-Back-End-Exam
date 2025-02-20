@@ -24,7 +24,7 @@ const props = defineProps({
     }
 });
 
-const emit = defineEmits(['toggle']);
+const emit = defineEmits(['toggle', 'toggleMinimize']);
 
 const showingNavigationDropdown = ref(false);
 </script>
@@ -47,6 +47,7 @@ const showingNavigationDropdown = ref(false);
                         </Link>
                         <button type="button" 
                             class="lg:hidden flex justify-center items-center size-8 text-gray-600 hover:text-gray-700" 
+                            @click="emit('toggleMinimize')"
                             data-hs-overlay="#hs-sidebar-footer">
                             <X class="size-5" />
                         </button>

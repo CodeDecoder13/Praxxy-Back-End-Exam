@@ -78,16 +78,16 @@ const showingNavigationDropdown = ref(false);
 
                         <!-- Product Management -->
                         <li>
-                            <Link href="#" 
+                            <Link :href="route('sidebar.product-management')" 
                                 class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-gray-700 hover:bg-gray-300 transition-colors">
-                                <ShoppingBag class="size-5" />
+                                <Users class="size-5" />
                                 <span v-if="!isMinimized">Product Management</span>
                             </Link>
                         </li>
 
                         <!-- Users -->
                         <li>
-                            <Link href="#" 
+                            <Link :href="route('sidebar.user-management')" 
                                 class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-gray-700 hover:bg-gray-300 transition-colors">
                                 <Users class="size-5" />
                                 <span v-if="!isMinimized">Users Management</span>
@@ -96,7 +96,7 @@ const showingNavigationDropdown = ref(false);
 
                         <!-- Video -->
                         <li>
-                            <Link href="#" 
+                            <Link :href="route('sidebar.video-management')" 
                                 class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-gray-700 hover:bg-gray-300 transition-colors">
                                 <Video class="size-5" />
                                 <span v-if="!isMinimized">Video Management</span>

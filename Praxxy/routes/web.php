@@ -27,3 +27,4 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 require __DIR__.'/sidebar.php';
 require __DIR__.'/product.php';
+require __DIR__.'/video.php';

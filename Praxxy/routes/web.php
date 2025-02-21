@@ -24,7 +24,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Location routes
+Route::post('/api/update-location', [App\Http\Controllers\Api\LocationController::class, 'update'])
+    ->name('api.location.update');
+Route::get('/api/get-location', [App\Http\Controllers\Api\LocationController::class, 'get'])
+    ->name('api.location.get');
+
 require __DIR__.'/auth.php';
 require __DIR__.'/sidebar.php';
 require __DIR__.'/product.php';
 require __DIR__.'/video.php';
+require __DIR__.'/dashboard.php';

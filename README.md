@@ -26,7 +26,7 @@ A modern web application built with Laravel 11 and Vue 3, featuring a responsive
 
 1. Clone the repository:
 ```bash
-git clone [your-repository-url]
+git clone https://github.com/CodeDecoder13/Praxxy-Back-End-Exam.git
 cd Praxxy
 ```
 

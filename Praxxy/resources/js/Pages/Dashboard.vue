@@ -9,6 +9,7 @@ import { LineChart, BarChart, PieChart } from 'echarts/charts';
 import { GridComponent, TooltipComponent, LegendComponent, TitleComponent } from 'echarts/components';
 import VChart from 'vue-echarts';
 import VisitorMap from '@/Components/VisitorMap.vue';
+import DashboardCalendar from '@/Components/DashboardCalendar.vue';
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
 
@@ -366,8 +367,14 @@ const updateLocation = async () => {
     }
 };
 
+const isChartsLoaded = ref(false);
+
 onMounted(() => {
     updateLocation();
+    // Fix ECharts DOM width/height issue
+    setTimeout(() => {
+        isChartsLoaded.value = true;
+    }, 100);
 });
 </script>
 
@@ -389,7 +396,7 @@ onMounted(() => {
                 </div>
 
                 <!-- Stats Cards -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
                     <div 
                         v-for="card in statsCards" 
                         :key="card.title"
@@ -405,40 +412,48 @@ onMounted(() => {
                     </div>
                 </div>
 
-                <!-- Combined Chart/Map Container -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="flex justify-between items-center mb-4">
-                        <h4 class="text-lg font-semibold text-gray-800">
-                            {{ getChartTitle(activeChart) }}
-                        </h4>
-                        <div class="flex gap-2">
-                            <button 
-                                v-for="btn in chartToggleButtons.filter(btn => btn.id !== 'map')"
-                                :key="btn.id"
-                                @click="activeChart = btn.id"
-                                :class="[
-                                    'px-3 py-2 rounded-lg flex items-center gap-2 transition-colors',
-                                    activeChart === btn.id
-                                        ? 'bg-blue-500 text-white' 
-                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                                ]"
-                            >
-                                <component :is="btn.icon" class="w-4 h-4" />
-                                <span>{{ btn.label }}</span>
-                            </button>
+                <!-- Chart and Calendar Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                    <!-- Chart Section -->
+                    <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-lg">
+                        <div class="flex justify-between items-center mb-4">
+                            <h4 class="text-lg font-semibold text-gray-800">
+                                {{ getChartTitle(activeChart) }}
+                            </h4>
+                            <div class="flex gap-2">
+                                <button 
+                                    v-for="btn in chartToggleButtons.filter(btn => btn.id !== 'map')"
+                                    :key="btn.id"
+                                    @click="activeChart = btn.id"
+                                    :class="[
+                                        'px-3 py-2 rounded-lg flex items-center gap-2 transition-colors',
+                                        activeChart === btn.id
+                                            ? 'bg-blue-500 text-white' 
+                                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                    ]"
+                                >
+                                    <component :is="btn.icon" class="w-4 h-4" />
+                                    <span class="hidden sm:inline">{{ btn.label }}</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div v-if="isChartsLoaded" class="h-[500px]">
+                            <v-chart 
+                                class="w-full h-full" 
+                                :option="currentChartOption" 
+                                :autoresize="true"
+                            />
                         </div>
                     </div>
-                    <div class="h-[400px]">
-                        <v-chart 
-                            class="w-full h-full" 
-                            :option="currentChartOption" 
-                            :autoresize="true"
-                        />
+
+                    <!-- Calendar Section -->
+                    <div class="lg:col-span-1">
+                        <DashboardCalendar />
                     </div>
                 </div>
 
                 <!-- Map Section -->
-                <div class="bg-white p-6 rounded-lg shadow-lg mt-8">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
                     <div class="flex justify-between items-center mb-4">
                         <h4 class="text-lg font-semibold text-gray-800">Visitor Locations</h4>
                         <div class="flex items-center text-gray-600">

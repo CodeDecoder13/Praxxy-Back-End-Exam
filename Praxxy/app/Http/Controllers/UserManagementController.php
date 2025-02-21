@@ -11,16 +11,7 @@ use Illuminate\Validation\Rules\Password;
 
 class UserManagementController extends Controller
 {
-    public function index()
-    {
-        $users = User::select('id', 'name', 'email', 'created_at')
-            ->latest()
-            ->get();
-
-        return Inertia::render('Sidebar/UserManagement', [
-            'users' => $users
-        ]);
-    }
+    
 
     public function store(Request $request)
     {

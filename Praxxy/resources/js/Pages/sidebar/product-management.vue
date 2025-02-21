@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import { ShoppingBag, Users, UserPlus, Eye, BarChart2, InfoIcon, Search, Filter, ChevronLeft, ChevronRight, Plus } from 'lucide-vue-next';
+import { ShoppingBag, Users, UserPlus, Eye, BarChart2, InfoIcon, Search, Filter, ChevronLeft, ChevronRight, Plus, Pencil, Trash2, X, Save } from 'lucide-vue-next';
 import ChartComponent from '@/Components/ChartComponent.vue';
 import ProductMultiStepForm from '@/Components/ProductMultiStepForm.vue';
 import { ref, onMounted, watch, computed } from 'vue';
@@ -459,24 +459,27 @@ onMounted(() => {
                                         {{ new Date(product.created_at).toLocaleString() }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                                        <div class="flex items-center justify-center space-x-1">
+                                        <div class="flex items-center space-x-2">
                                             <button
                                                 @click="viewProduct(product)"
-                                                class="inline-flex items-center px-2 py-1 text-sm font-medium text-blue-600 hover:text-blue-900 focus:outline-none"
+                                                class="text-blue-600 hover:text-blue-800 transition-colors"
+                                                title="View Product"
                                             >
-                                                View
+                                                <Eye class="w-5 h-5" />
                                             </button>
                                             <button
                                                 @click="editProduct(product)"
-                                                class="inline-flex items-center px-2 py-1 text-sm font-medium text-indigo-600 hover:text-indigo-900 focus:outline-none"
+                                                class="text-green-600 hover:text-green-800 transition-colors"
+                                                title="Edit Product"
                                             >
-                                                Edit
+                                                <Pencil class="w-5 h-5" />
                                             </button>
                                             <button
                                                 @click="deleteProduct(product)"
-                                                class="inline-flex items-center px-2 py-1 text-sm font-medium text-red-600 hover:text-red-900 focus:outline-none"
+                                                class="text-red-600 hover:text-red-800 transition-colors"
+                                                title="Delete Product"
                                             >
-                                                Delete
+                                                <Trash2 class="w-5 h-5" />
                                             </button>
                                         </div>
                                     </td>
@@ -499,9 +502,7 @@ onMounted(() => {
                                     @click="showEditModal = false"
                                     class="text-gray-400 hover:text-gray-500 focus:outline-none"
                                 >
-                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
+                                    <X class="w-6 h-6" />
                                 </button>
                             </div>
 
@@ -641,25 +642,18 @@ onMounted(() => {
                                     <button
                                         type="button"
                                         @click="showEditModal = false"
-                                        class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                                        class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                                     >
+                                        <X class="w-4 h-4 mr-2" />
                                         Cancel
                                     </button>
                                     <button
                                         type="submit"
-                                        class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                         :disabled="isSubmitting"
+                                        class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
                                     >
-                                        <template v-if="isSubmitting">
-                                            <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                            </svg>
-                                            Saving...
-                                        </template>
-                                        <template v-else>
-                                            Save Changes
-                                        </template>
+                                        <Save class="w-4 h-4 mr-2" />
+                                        Save Changes
                                     </button>
                                 </div>
                             </form>

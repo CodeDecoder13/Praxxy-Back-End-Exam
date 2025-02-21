@@ -18,12 +18,12 @@ class SidebarAdminController extends Controller
     public function UserManagement()
     {
         $users = User::select('id', 'name', 'email', 'created_at')
-        ->latest()
-        ->get();
+            ->latest()
+            ->paginate(10);
 
-    return Inertia::render('sidebar/user-management', [
-        'users' => $users
-    ]);
+        return Inertia::render('sidebar/user-management', [
+            'users' => $users
+        ]);
     }
 
     public function VideoManagement()

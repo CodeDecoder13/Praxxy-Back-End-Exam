@@ -9,20 +9,7 @@ const isLoaded = ref(false);
 
 // Sample events - you can replace these with real data
 const events = ref([
-    {
-        id: 1,
-        name: 'Team Meeting',
-        start: new Date(2025, 1, 21, 10, 0),
-        end: new Date(2025, 1, 21, 11, 0),
-        color: 'blue'
-    },
-    {
-        id: 2,
-        name: 'Product Launch',
-        start: new Date(2025, 1, 22, 14, 0),
-        end: new Date(2025, 1, 22, 16, 0),
-        color: 'green'
-    }
+    
 ]);
 
 const attributes = computed(() => [

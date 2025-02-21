@@ -24,4 +24,16 @@ class Video extends Model
     {
         return $this->created_at->diffForHumans();
     }
+
+    public function getUrlAttribute($value)
+    {
+        if (!$value) return null;
+        return $value[0] === '/' ? $value : '/storage/' . $value;
+    }
+
+    public function getThumbnailAttribute($value)
+    {
+        if (!$value) return null;
+        return $value[0] === '/' ? $value : '/storage/' . $value;
+    }
 }

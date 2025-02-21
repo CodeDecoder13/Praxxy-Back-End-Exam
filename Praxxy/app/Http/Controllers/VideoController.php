@@ -11,19 +11,7 @@ use Illuminate\Support\Facades\Log;
 
 class VideoController extends Controller
 {
-    public function index()
-    {
-        $videos = Video::latest()->get();
-        Log::info('Fetched videos:', ['count' => $videos->count(), 'videos' => $videos->toArray()]);
-
-        return Inertia::render('sidebar/video-management', [
-            'videos' => $videos,
-            'flash' => [
-                'success' => session('success'),
-                'error' => session('error')
-            ]
-        ]);
-    }
+    
 
     public function store(Request $request)
     {
@@ -42,14 +30,14 @@ class VideoController extends Controller
             if ($request->hasFile('video')) {
                 $videoFile = $request->file('video');
                 $videoPath = $videoFile->store('videos', 'public');
-                $video->url = Storage::disk('public')->url($videoPath);
+                $video->url = '/storage/' . $videoPath;
                 Log::info('Video stored at:', ['path' => $videoPath, 'url' => $video->url]);
             }
 
             if ($request->hasFile('thumbnail')) {
                 $thumbnailFile = $request->file('thumbnail');
                 $thumbnailPath = $thumbnailFile->store('thumbnails', 'public');
-                $video->thumbnail = Storage::disk('public')->url($thumbnailPath);
+                $video->thumbnail = '/storage/' . $thumbnailPath;
                 Log::info('Thumbnail stored at:', ['path' => $thumbnailPath, 'url' => $video->thumbnail]);
             }
 
@@ -69,12 +57,41 @@ class VideoController extends Controller
             $request->validate([
                 'title' => 'required|string|max:255',
                 'description' => 'nullable|string',
+                'video' => 'nullable|file|mimetypes:video/mp4,video/avi,video/mpeg,video/quicktime|max:102400',
+                'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
             ]);
 
-            $video->update($request->only(['title', 'description']));
+            $video->title = $request->title;
+            $video->description = $request->description;
 
+            if ($request->hasFile('video')) {
+                // Delete old video file
+                if ($video->url) {
+                    $oldPath = str_replace('/storage/', '', $video->url);
+                    Storage::disk('public')->delete($oldPath);
+                }
+
+                $videoFile = $request->file('video');
+                $videoPath = $videoFile->store('videos', 'public');
+                $video->url = '/storage/' . $videoPath;
+            }
+
+            if ($request->hasFile('thumbnail')) {
+                // Delete old thumbnail
+                if ($video->thumbnail) {
+                    $oldPath = str_replace('/storage/', '', $video->thumbnail);
+                    Storage::disk('public')->delete($oldPath);
+                }
+
+                $thumbnailFile = $request->file('thumbnail');
+                $thumbnailPath = $thumbnailFile->store('thumbnails', 'public');
+                $video->thumbnail = '/storage/' . $thumbnailPath;
+            }
+
+            $video->save();
             return redirect()->back()->with('success', 'Video updated successfully!');
         } catch (\Exception $e) {
+            Log::error('Failed to update video:', ['error' => $e->getMessage()]);
             return redirect()->back()->with('error', 'Failed to update video. ' . $e->getMessage());
         }
     }
@@ -82,18 +99,22 @@ class VideoController extends Controller
     public function destroy(Video $video)
     {
         try {
+            // Delete video file
             if ($video->url) {
-                Storage::disk('public')->delete(str_replace('/storage/', '', parse_url($video->url, PHP_URL_PATH)));
+                $videoPath = str_replace('/storage/', '', $video->url);
+                Storage::disk('public')->delete($videoPath);
             }
-            
+
+            // Delete thumbnail
             if ($video->thumbnail) {
-                Storage::disk('public')->delete(str_replace('/storage/', '', parse_url($video->thumbnail, PHP_URL_PATH)));
+                $thumbnailPath = str_replace('/storage/', '', $video->thumbnail);
+                Storage::disk('public')->delete($thumbnailPath);
             }
 
             $video->delete();
-
             return redirect()->back()->with('success', 'Video deleted successfully!');
         } catch (\Exception $e) {
+            Log::error('Failed to delete video:', ['error' => $e->getMessage()]);
             return redirect()->back()->with('error', 'Failed to delete video. ' . $e->getMessage());
         }
     }

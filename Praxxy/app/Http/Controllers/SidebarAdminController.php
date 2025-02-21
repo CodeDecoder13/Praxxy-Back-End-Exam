@@ -7,6 +7,7 @@ use App\Models\Video;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class SidebarAdminController extends Controller
 {
@@ -28,8 +29,21 @@ class SidebarAdminController extends Controller
 
     public function VideoManagement()
     {
+        $videos = Video::latest()->get()->map(function ($video) {
+            return [
+                'id' => $video->id,
+                'title' => $video->title,
+                'description' => $video->description,
+                'url' => $video->url,
+                'thumbnail' => $video->thumbnail,
+                'created_at' => $video->created_at
+            ];
+        });
+        
+        Log::info('Fetched videos:', ['count' => $videos->count(), 'videos' => $videos->toArray()]);
+
         return Inertia::render('sidebar/video-management', [
-            'videos' => Video::latest()->get(),
+            'videos' => $videos,
             'flash' => [
                 'success' => session('success'),
                 'error' => session('error')

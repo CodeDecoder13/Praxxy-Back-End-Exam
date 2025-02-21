@@ -1,4 +1,7 @@
+![image](https://github.com/user-attachments/assets/5f1f7305-c4a4-4dea-9e9e-36b14aa0cf4b)
+
 # Praxxy Backend Exam Project
+
 
 A modern web application built with Laravel 11 and Vue 3, featuring a responsive and maintainable design using Tailwind CSS.
 

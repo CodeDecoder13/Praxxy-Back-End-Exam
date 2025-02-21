@@ -35,3 +35,4 @@ require __DIR__.'/sidebar.php';
 require __DIR__.'/product.php';
 require __DIR__.'/video.php';
 require __DIR__.'/dashboard.php';
+require __DIR__.'/user.php';

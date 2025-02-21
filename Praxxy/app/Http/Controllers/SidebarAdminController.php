@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Video;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\User;
 
 class SidebarAdminController extends Controller
 {
@@ -16,7 +17,13 @@ class SidebarAdminController extends Controller
 
     public function UserManagement()
     {
-        return Inertia::render('sidebar/user-management');
+        $users = User::select('id', 'name', 'email', 'created_at')
+        ->latest()
+        ->get();
+
+    return Inertia::render('sidebar/user-management', [
+        'users' => $users
+    ]);
     }
 
     public function VideoManagement()

@@ -19,6 +19,8 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
+        "@headlessui/tailwindcss": "^0.2.2",
+        "@headlessui/vue": "^1.7.23",
         "@popperjs/core": "^2.11.8",
         "@tinymce/tinymce-vue": "^6.1.0",
         "@vitejs/plugin-vue": "^5.2.1",

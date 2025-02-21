@@ -1,5 +1,7 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
+import headlessui from '@headlessui/tailwindcss';
+import preline from 'preline/plugin';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -8,7 +10,6 @@ export default {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         './resources/js/**/*.vue',
-        'node_modules/preline/dist/*.js'
     ],
 
     theme: {
@@ -19,7 +20,9 @@ export default {
         },
     },
 
-    plugins: [forms,
-        require('preline/plugin')
+    plugins: [
+        forms,
+        headlessui,
+        preline
     ],
 };

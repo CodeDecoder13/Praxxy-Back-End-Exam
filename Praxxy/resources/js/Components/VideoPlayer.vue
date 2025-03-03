@@ -68,6 +68,33 @@ watch(() => props.url, (newUrl, oldUrl) => {
   }
 })
 
+// Add test function
+const testPlayer = () => {
+  if (!player) return false;
+  
+  try {
+    // Test basic player functionality
+    player.play();
+    player.pause();
+    player.currentTime(0);
+    
+    // Test URL changing
+    const currentSrc = player.currentSrc();
+    return {
+      playerInitialized: true,
+      currentSource: currentSrc,
+      controlsWorking: player.controls(),
+      isReady: player.ready()
+    };
+  } catch (error) {
+    console.error('Video player test failed:', error);
+    return false;
+  }
+};
+
+// Expose the test function
+defineExpose({ testPlayer });
+
 onMounted(() => {
   initializePlayer()
 })
